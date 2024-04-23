@@ -1,8 +1,13 @@
-export default function HomePage() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+import { currentUser } from "@clerk/nextjs/server";
 
-			<h1 className="font-extrabold text-7xl">Hello World</h1>
-    </main>
+export default async function HomePage() {
+  const user = await currentUser();
+  return (
+    <>
+      <div className="flex h-full w-full items-center justify-center">
+        <h1 className="text-7xl font-extrabold">Hello World</h1>
+        <p>{user?.id}</p>
+      </div>
+    </>
   );
 }
