@@ -5,7 +5,6 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
-  pgEnum,
   pgTableCreator,
   serial,
   text,
@@ -21,28 +20,11 @@ import {
  */
 export const createTable = pgTableCreator((name) => `dict_${name}`);
 
-// Word
-export const wordLevelEnum = pgEnum("level", [
-  "a1",
-  "a2",
-  "b1",
-  "b2",
-  "c1",
-  "c2",
-]);
-
 export const words = createTable(
   "words",
   {
     id: serial("id").primaryKey(),
     word: varchar("word", { length: 50 }).notNull(),
-    level: wordLevelEnum("level"),
-    // definitionURL: varchar("definition_url", { length: 255 }),
-    // pronauciationURL: varchar("pronunciation_url", { length: 255 }),
-    pos: varchar("pos", { length: 50 }),
-    // appearance: integer("appearance").default(0),
-    // knownCount: integer("known_count").default(0),
-    // unknownCount: integer("unknown_count").default(0),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -50,15 +32,11 @@ export const words = createTable(
   },
   (table) => ({
     nameIndex: index("word_idx").on(table.word),
-    // appearanceIndex: index("appearance_idx").on(table.appearance),
-    // knownCountIndex: index("known_count_idx").on(table.knownCount),
-    // unknownCountIndex: index("unknown_count_idx").on(table.unknownCount),
   }),
 );
 
 export const wordsRelations = relations(words, ({ many }) => ({
   meanings: many(meanings),
-  userRecords: many(userRecords),
 }));
 
 // Word Meaning
@@ -78,19 +56,12 @@ export const meaningsRelations = relations(meanings, ({ one }) => ({
   }),
 }));
 
-// User's records
-export const userRecordEnum = pgEnum("type", ["know", "unknown"]);
+// User's words
+export const userWords = createTable("user_words", {
+	userId: varchar("user_id", {length: 256}).primaryKey(),
+	words_ids:  integer("words_ids").array()
+})
 
-export const userRecords = createTable("user_records", {
-  id: serial("id").primaryKey(),
-  userId: varchar("userId", { length: 256 }).notNull(),
-  wordId: integer("word_id").notNull(),
-  type: userRecordEnum("type").notNull(),
-});
-
-export const userRecordRelations = relations(userRecords, ({ one }) => ({
-  word: one(words, {
-    fields: [userRecords.wordId],
-    references: [words.id],
-  }),
-}));
+export const userWordsRelations = relations(userWords, ({many}) => ({
+	words: many(words)
+}))
