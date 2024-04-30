@@ -7,3 +7,4 @@
 - [ ] User records
 - [ ] Flashcards
 - [ ] Add definitions to the DB
+- [ ] Fix es-lint issues (correctly they are ignored)
