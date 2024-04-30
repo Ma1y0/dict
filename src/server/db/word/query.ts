@@ -8,11 +8,8 @@ export async function getWord(s: string) {
     },
   });
 
-  sleep(10000);
 
   return word;
 }
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+
