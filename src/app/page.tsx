@@ -8,7 +8,7 @@ export default async function HomePage() {
         <ul className="flex w-full flex-col gap-3 md:w-[30%]">
           <li>
             <Button className="w-full" asChild>
-              <Link href="/add">Add Word</Link>
+              <Link href="/word">Words</Link>
             </Button>
           </li>
           <li>
