@@ -6,7 +6,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { Input } from "~/components/ui/input";
 
-export function Search(props: { placeholder: string }) {
+export function Search(props: {placeholder: string}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -21,7 +21,7 @@ export function Search(props: { placeholder: string }) {
     }
 
     replace(`${pathname}?${params.toString()}`);
-  }, 500);
+  }, 300);
 
   return (
     <div className="relative flex flex-1 flex-shrink-0">
@@ -31,10 +31,12 @@ export function Search(props: { placeholder: string }) {
       <Input
         name="search"
         placeholder={props.placeholder}
-        onChange={(e) => handleSearch(e.target.value.toLowerCase())}
+        className=""
+				onChange={(e) => handleSearch(e.target.value.toLowerCase())}
         defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2  peer-focus:text-gray-900" />
     </div>
   );
 }
+
