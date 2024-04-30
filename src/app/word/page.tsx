@@ -1,5 +1,5 @@
 import { getWord } from "~/server/db/word/query";
-import { Search } from "./_components/seach";
+import { Search } from "./_components/search";
 
 export default async function wordPage({
   searchParams,
@@ -14,7 +14,7 @@ export default async function wordPage({
     <>
       <div className="flex h-full w-full flex-1 flex-col items-center p-6">
         <div className="w-full md:w-[30%]">
-          <Search />
+          <Search placeholder="Seach for a word" />
         </div>
         <div>{word?.id}</div>
       </div>

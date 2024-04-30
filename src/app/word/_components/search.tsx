@@ -6,7 +6,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { Input } from "~/components/ui/input";
 
-export function Search() {
+export function Search(props: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -30,9 +30,8 @@ export function Search() {
       </label>
       <Input
         name="search"
-        placeholder="Search for a word"
-        className=""
-				onChange={(e) => handleSearch(e.target.value)}
+        placeholder={props.placeholder}
+        onChange={(e) => handleSearch(e.target.value.toLowerCase())}
         defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2  peer-focus:text-gray-900" />

@@ -24,7 +24,7 @@ export const words = createTable(
   "words",
   {
     id: serial("id").primaryKey(),
-    word: varchar("word", { length: 50 }).notNull(),
+    word: varchar("word", { length: 50 }).unique().notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

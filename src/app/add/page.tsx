@@ -1,7 +1,11 @@
+import { Search } from "../_components/seach";
+
 export default async function AddPage() {
   return (
     <>
-      <p>Add Word</p>
+			<div>
+				<Search placeholder="Add word" />
+			</div>
     </>
   );
 }
