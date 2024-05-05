@@ -8,8 +8,5 @@ export async function getWord(s: string) {
     },
   });
 
-
   return word;
 }
-
-

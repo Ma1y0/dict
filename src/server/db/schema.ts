@@ -40,14 +40,20 @@ export const wordsRelations = relations(words, ({ many }) => ({
 }));
 
 // Word Meaning
-export const meanings = createTable("meanings", {
-  id: serial("id").primaryKey(),
-  wordId: integer("word_id").notNull(),
-  pos: varchar("pos", { length: 50 }),
-  definition: text("definition").notNull(),
-  synonyms: varchar("synonyms", { length: 50 }).array(),
-  antonyms: varchar("antonyms", { length: 50 }).array(),
-});
+export const meanings = createTable(
+  "meanings",
+  {
+    id: serial("id").primaryKey(),
+    wordId: integer("word_id").notNull(),
+    pos: varchar("pos", { length: 50 }),
+    definition: text("definition").notNull(),
+    synonyms: varchar("synonyms", { length: 50 }).array().notNull(),
+    antonyms: varchar("antonyms", { length: 50 }).array().notNull(),
+  },
+  (table) => ({
+    wordIdIndex: index("word_id_idx").on(table.wordId),
+  }),
+);
 
 export const meaningsRelations = relations(meanings, ({ one }) => ({
   word: one(words, {
@@ -56,12 +62,24 @@ export const meaningsRelations = relations(meanings, ({ one }) => ({
   }),
 }));
 
-// User's words
-export const userWords = createTable("user_words", {
-	userId: varchar("user_id", {length: 256}).primaryKey(),
-	words_ids:  integer("words_ids").array()
-})
+// User's to-learn words
+export const toLearn = createTable(
+  "to_learn",
+  {
+    userId: integer("user_id").primaryKey(),
+    wordId: integer("word_id").notNull(),
+    appearance: integer("appearance").notNull().default(0),
+    knew: integer("knew").notNull().default(0),
+    didntKnow: integer("didnt_know").notNull().default(0),
+  },
+  (table) => ({
+    wordLearnIndex: index("word_learn_idx").on(table.wordId),
+  }),
+);
 
-export const userWordsRelations = relations(userWords, ({many}) => ({
-	words: many(words)
-}))
+export const toLearnRelations = relations(toLearn, ({ one }) => ({
+  word: one(words, {
+    fields: [toLearn.wordId],
+    references: [words.id],
+  }),
+}));
