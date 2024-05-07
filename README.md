@@ -4,7 +4,11 @@
 - [x] Auth
 - [x] DB schema
 - [ ] Better searching
-- [ ] Add to_learn table
+- [x] Add to_learn table
 - [ ] Flashcards
 - [ ] Add definitions to the DB
-- [ ] Fix es-lint issues (correctly they are ignored)
+
+
+## Minor To-Dos
+- [ ] Trim word search
+- [ ] Fix es-lint issues (currectly they are ignored)
