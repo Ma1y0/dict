@@ -3,6 +3,7 @@
 ## To-Do
 - [x] Auth
 - [x] DB schema
+- [ ] Definitions
 - [ ] Better searching
 - [x] Add to_learn table
 - [ ] Flashcards

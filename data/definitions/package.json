@@ -9,6 +9,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.8.0"
+    "@types/cli-progress": "^3.11.5",
+    "@vercel/postgres": "^0.8.0",
+    "cli-progress": "^3.12.0"
   }
 }
