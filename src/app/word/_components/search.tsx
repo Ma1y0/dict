@@ -3,7 +3,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-
 import { Input } from "~/components/ui/input";
 
 export function Search(props: {placeholder: string}) {

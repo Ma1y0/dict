@@ -1,4 +1,4 @@
-interface Meaning {
+export interface Meaning {
   definition: string;
   example?: string;
   antonyms: string[];
@@ -40,4 +40,3 @@ export function parseDefJson(s: any): Meaning[] {
 
   return meanings;
 }
-
