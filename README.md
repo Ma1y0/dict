@@ -11,5 +11,5 @@
 
 
 ## Minor To-Dos
-- [ ] Trim word search
-- [ ] Fix es-lint issues (currectly they are ignored)
+- [X] Trim word search
+- [ ] Fix es-lint issues (currently they are ignored)
