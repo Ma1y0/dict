@@ -31,7 +31,7 @@ async function fetchDefiniton(word: string, wordId: number) {
 	}
 
 	const definitionsParsed = parseDefJson(await res.json())
-	const definitions: newMeaning[] = definitionsParsed.map(x => ({wordId: wordId, pos: x.partOfSpeech, synonyms: x.synonyms, antonyms: x.antonyms, example: x.example}))
+	const definitions: newMeaning[] = definitionsParsed.map(x => ({wordId: wordId, definition: x.definition, pos: x.partOfSpeech, synonyms: x.synonyms, antonyms: x.antonyms, example: x.example}))
 
 	await db.insert(meanings).values(definitions)
 }
