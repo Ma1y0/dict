@@ -47,6 +47,7 @@ export const meanings = createTable(
     wordId: integer("word_id").notNull(),
     pos: varchar("pos", { length: 50 }),
     definition: text("definition").notNull(),
+		example: text("example"),
     synonyms: varchar("synonyms", { length: 50 }).array().notNull(),
     antonyms: varchar("antonyms", { length: 50 }).array().notNull(),
   },
