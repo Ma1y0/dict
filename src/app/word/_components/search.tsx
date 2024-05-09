@@ -30,7 +30,7 @@ export function Search(props: {placeholder: string}) {
       <Input
         name="search"
         placeholder={props.placeholder}
-        className=""
+        className="text-lg"
 				onChange={(e) => handleSearch(e.target.value.toLowerCase().trim())}
         defaultValue={searchParams.get("query")?.toString()}
       />

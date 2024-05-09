@@ -13,10 +13,10 @@ export default async function wordPage({
   return (
     <>
       <div className="flex h-full w-full flex-1 flex-col items-center gap-6 p-6">
-        <div className="w-full md:w-[30%]">
+        <div className="w-full md:w-[45%]">
           <Search placeholder="Seach for a word" />
         </div>
-        <div className="w-full md:w-[30%]">
+        <div className="w-full md:w-[45%]">
           {searchParams?.query && (
             <Suspense
               key={searchParams.query}
