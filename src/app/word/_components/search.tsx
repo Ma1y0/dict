@@ -31,7 +31,7 @@ export function Search(props: {placeholder: string}) {
         name="search"
         placeholder={props.placeholder}
         className=""
-				onChange={(e) => handleSearch(e.target.value.toLowerCase())}
+				onChange={(e) => handleSearch(e.target.value.toLowerCase().trim())}
         defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2  peer-focus:text-gray-900" />

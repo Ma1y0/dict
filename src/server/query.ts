@@ -13,7 +13,7 @@ export async function getWord(s: string) {
 
   // Here aren't any meanings available
   if (!word?.meanings.length && word != undefined) {
-		fetchDefiniton(word.word, word.id)
+		await fetchDefiniton(word.word, word.id)
   }
 
   return word;
@@ -28,10 +28,12 @@ async function fetchDefiniton(word: string, wordId: number) {
 
   if (!res.ok) {
 		console.log(`Failed to fetch definition:\nStatus: ${res.status}\nWord: ${word}\nBody: ${await res.json()}`)
+		return false
 	}
 
 	const definitionsParsed = parseDefJson(await res.json())
 	const definitions: newMeaning[] = definitionsParsed.map(x => ({wordId: wordId, definition: x.definition, pos: x.partOfSpeech, synonyms: x.synonyms, antonyms: x.antonyms, example: x.example}))
 
 	await db.insert(meanings).values(definitions)
+	return true
 }
