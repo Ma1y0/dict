@@ -9,7 +9,7 @@ export function AddToLearnButton() {
 
   return (
     <>
-      <Button className="absolute right-3 top-2.5" disabled={pending}>
+      <Button className="" disabled={pending}>
         {pending ? <Spinner /> : "Learn"}
       </Button>
     </>

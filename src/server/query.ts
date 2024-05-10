@@ -15,6 +15,8 @@ export async function getWord(s: string) {
   // There aren't any meanings available
   if (!word?.meanings.length && word != undefined) {
     await fetchDefiniton(word.word, word.id);
+
+		return getWord(s)
   }
 
   return word;
@@ -28,10 +30,9 @@ async function fetchDefiniton(word: string, wordId: number) {
   );
 
   if (!res.ok) {
-    console.log(
+    throw new Error(
       `Failed to fetch definition:\nStatus: ${res.status}\nWord: ${word}\nBody: ${await res.json()}`,
     );
-    return false;
   }
 
   const definitionsParsed = parseDefJson(await res.json());
@@ -45,12 +46,10 @@ async function fetchDefiniton(word: string, wordId: number) {
   }));
 
   await db.insert(meanings).values(definitions);
-  return true;
 }
 
 export async function addWordToLearnList(wordId: number) {
   const { userId } = auth();
-
 
   if (!userId) throw new Error("Unauthorized");
 
