@@ -51,9 +51,8 @@ async function fetchDefiniton(word: string, wordId: number) {
 export async function addWordToLearnList(wordId: number) {
   const { userId } = auth();
 
+
   if (!userId) throw new Error("Unauthorized");
 
-  await db
-    .insert(toLearn)
-    .values({ userId, wordId: Number(wordId) });
+  await db.insert(toLearn).values({ userId, wordId: Number(wordId) });
 }

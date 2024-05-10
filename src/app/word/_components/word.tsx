@@ -1,6 +1,6 @@
-import { Button } from "~/components/ui/button";
 import { meanings } from "~/server/db/schema";
 import { addWordToLearnList, getWord } from "~/server/query";
+import { AddToLearnButton } from "./addToLearButton";
 
 export async function Word(props: { word: string }) {
   const word = await getWord(props.word);
@@ -18,7 +18,7 @@ export async function Word(props: { word: string }) {
           await addWordToLearnList(word.id);
         }}
       >
-        <Button className="absolute right-2 top-2.5">Learn</Button>
+        <AddToLearnButton />
       </form>
 
       <h2 className="h-10 text-2xl font-semibold">{word.word}</h2>
