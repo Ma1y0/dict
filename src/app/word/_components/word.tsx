@@ -11,11 +11,13 @@ export async function Word(props: { word: string }) {
 
   return (
     <div className="relative border px-3 py-2">
-      <form action={async () => {
-				"use server"
+      <form
+        action={async () => {
+          "use server";
 
-				await addWordToLearnList(word.id)
-				}}>
+          await addWordToLearnList(word.id);
+        }}
+      >
         <Button className="absolute right-2 top-2.5">Learn</Button>
       </form>
 

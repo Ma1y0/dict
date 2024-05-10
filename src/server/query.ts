@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "./db";
 import { parseDefJson } from "~/lib/parseDefinitionJSON";
-import { meanings } from "./db/schema";
+import { meanings, toLearn } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 
 export async function getWord(s: string) {
@@ -53,5 +53,7 @@ export async function addWordToLearnList(wordId: number) {
 
   if (!userId) throw new Error("Unauthorized");
 
-  console.log(`User ${userId} want to learn word ${wordId}`);
+  await db
+    .insert(toLearn)
+    .values({ userId, wordId: Number(wordId) });
 }

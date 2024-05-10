@@ -21,7 +21,7 @@ export default async function wordPage({
             <Suspense
               key={searchParams.query}
               fallback={
-                <div className="flex justify-center w-full p-6">
+                <div className="flex w-full justify-center p-6">
                   <Spinner />
                 </div>
               }

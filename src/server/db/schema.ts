@@ -47,7 +47,7 @@ export const meanings = createTable(
     wordId: integer("word_id").notNull(),
     pos: varchar("pos", { length: 50 }),
     definition: text("definition").notNull(),
-		example: text("example"),
+    example: text("example"),
     synonyms: varchar("synonyms", { length: 50 }).array().notNull(),
     antonyms: varchar("antonyms", { length: 50 }).array().notNull(),
   },
@@ -67,7 +67,8 @@ export const meaningsRelations = relations(meanings, ({ one }) => ({
 export const toLearn = createTable(
   "to_learn",
   {
-    userId: integer("user_id").primaryKey(),
+    id: serial("id").primaryKey(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
     wordId: integer("word_id").notNull(),
     appearance: integer("appearance").notNull().default(0),
     knew: integer("knew").notNull().default(0),
@@ -75,6 +76,11 @@ export const toLearn = createTable(
   },
   (table) => ({
     wordLearnIndex: index("word_learn_idx").on(table.wordId),
+    wordAppearanceIndex: index("word_learn_appearance_idx").on(
+      table.appearance,
+    ),
+    wordKnewIndex: index("word_learn_knew_idx").on(table.knew),
+    didntKnowIndex: index("word_learn_didnkt_know_idx").on(table.didntKnow),
   }),
 );
 
