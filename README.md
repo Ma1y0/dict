@@ -3,11 +3,12 @@
 ## To-Do
 - [x] Auth
 - [x] DB schema
-- [ ] Definitions
+- [x] Definitions
 - [ ] Better searching
 - [x] Add to_learn table
 - [ ] Flashcards
-- [ ] Add definitions to the DB
+- [x] Add definitions to the DB
+- [x] To learn button (Server action?)
 
 
 ## Minor To-Dos
