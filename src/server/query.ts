@@ -16,7 +16,7 @@ export async function getWord(s: string) {
   if (!word?.meanings.length && word != undefined) {
     await fetchDefiniton(word.word, word.id);
 
-		return getWord(s)
+    return getWord(s);
   }
 
   return word;

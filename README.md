@@ -9,6 +9,7 @@
 - [ ] Flashcards
 - [x] Add definitions to the DB
 - [x] To learn button (Server action?)
+- [ ] Translations
 
 
 ## Minor To-Dos
