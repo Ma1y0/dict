@@ -12,3 +12,4 @@
 - [x] Translations
 - [x] Trim word search
 - [ ] Fix es-lint issues (currently they are ignored)
+- [ ] Users can add word to their to learn list even if they already done so
