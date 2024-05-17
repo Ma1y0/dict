@@ -13,6 +13,7 @@ export async function Word(props: { word: string }) {
     <div className="border px-3 py-2">
       <div className="flex h-10 flex-1 items-center justify-between border-b py-6 pb-8">
         <h2 className="text-2xl font-semibold">{word.word}</h2>
+				<h2 className="text-2xl font-semibold">{word.translations.map((x) => x.translation).join(" ")}</h2>
         <form
           action={async () => {
             "use server";

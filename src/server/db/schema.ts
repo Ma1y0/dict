@@ -3,6 +3,7 @@
 
 import { relations, sql } from "drizzle-orm";
 import {
+  char,
   index,
   integer,
   pgTableCreator,
@@ -37,6 +38,8 @@ export const words = createTable(
 
 export const wordsRelations = relations(words, ({ many }) => ({
   meanings: many(meanings),
+  toLearn: many(toLearn),
+  translations: many(translations),
 }));
 
 // Word Meaning
@@ -87,6 +90,28 @@ export const toLearn = createTable(
 export const toLearnRelations = relations(toLearn, ({ one }) => ({
   word: one(words, {
     fields: [toLearn.wordId],
+    references: [words.id],
+  }),
+}));
+
+// Word translation
+export const translations = createTable(
+  "translations",
+  {
+    id: serial("id").primaryKey(),
+    wordId: integer("word_id").notNull(),
+    language: char("language", { length: 2 }).notNull(), // ISO 639-1 language code
+    translation: text("translation").array().notNull(),
+  },
+  (table) => ({
+    translationWord: index("translation_word_idx").on(table.wordId),
+    translationLanguage: index("translation_language_idx").on(table.language),
+  }),
+);
+
+export const translationsRelations = relations(translations, ({ one }) => ({
+  word: one(words, {
+    fields: [translations.wordId],
     references: [words.id],
   }),
 }));

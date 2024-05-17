@@ -1,20 +1,30 @@
 import "server-only";
 import { db } from "./db";
 import { parseDefJson } from "~/lib/parseDefinitionJSON";
-import { meanings, toLearn } from "./db/schema";
+import { meanings, toLearn, translations } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
+import { TargetLanguageCode } from "deepl-node";
+import { translate } from "./translate";
 
 export async function getWord(s: string) {
   const word = await db.query.words.findFirst({
     where: (words, { eq }) => eq(words.word, s),
     with: {
       meanings: true,
+      translations: true,
     },
   });
 
   // There aren't any meanings available
   if (!word?.meanings.length && word != undefined) {
     await fetchDefiniton(word.word, word.id);
+
+    return getWord(s);
+  }
+
+  // There aren't any translations available
+  if (!word?.translations.length && word != undefined) {
+    await createTranslation(word.word, word.id, "cs");
 
     return getWord(s);
   }
@@ -54,4 +64,17 @@ export async function addWordToLearnList(wordId: number) {
   if (!userId) throw new Error("Unauthorized");
 
   await db.insert(toLearn).values({ userId, wordId: Number(wordId) });
+}
+
+/// Translations
+async function createTranslation(
+  word: string,
+  wordId: number,
+  lang: TargetLanguageCode,
+) {
+  const translation = await translate(word, lang);
+
+  await db
+    .insert(translations)
+    .values({ wordId, language: lang, translation: [translation.text] });
 }
