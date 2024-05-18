@@ -1,4 +1,4 @@
-import { meanings } from "~/server/db/schema";
+import { type meanings } from "~/server/db/schema";
 import { addWordToLearnList, getWord } from "~/server/query";
 import { AddToLearnButton } from "./addToLearButton";
 import { SignedIn } from "@clerk/nextjs";

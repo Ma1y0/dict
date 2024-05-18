@@ -13,7 +13,7 @@ export default async function HomePage() {
           </li>
           <li>
             <Button className="w-full" asChild>
-              <Link href="/">My words</Link>
+              <Link href="/my-words">My words</Link>
             </Button>
           </li>
         </ul>

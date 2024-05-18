@@ -8,9 +8,9 @@ import { Input } from "~/components/ui/input";
 export function Search(props: {placeholder: string}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
 
-  const handleSearch = useDebouncedCallback((query) => {
+  const handleSearch = useDebouncedCallback((query: string) => {
     const params = new URLSearchParams(searchParams);
 
     if (query) {
@@ -19,7 +19,7 @@ export function Search(props: {placeholder: string}) {
       params.delete("query");
     }
 
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   }, 300);
 
   return (

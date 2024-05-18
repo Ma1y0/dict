@@ -3,7 +3,7 @@ import { db } from "./db";
 import { parseDefJson } from "~/lib/parseDefinitionJSON";
 import { meanings, toLearn, translations } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
-import { TargetLanguageCode } from "deepl-node";
+import { type TargetLanguageCode } from "deepl-node";
 import { translate } from "./translate";
 
 export async function getWord(s: string) {
@@ -39,6 +39,10 @@ async function fetchDefiniton(word: string, wordId: number) {
     `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`,
   );
 
+  if (res.status == 404) {
+    return;
+  }
+
   if (!res.ok) {
     throw new Error(
       `Failed to fetch definition:\nStatus: ${res.status}\nWord: ${word}\nBody: ${await res.json()}`,
@@ -64,6 +68,21 @@ export async function addWordToLearnList(wordId: number) {
   if (!userId) throw new Error("Unauthorized");
 
   await db.insert(toLearn).values({ userId, wordId: Number(wordId) });
+}
+
+export async function getUsersToLearnList() {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
+  const words = db.query.toLearn.findMany({
+    where: (word, { eq }) => eq(word.userId, userId),
+    with: {
+      word: true,
+    },
+  });
+
+  return words;
 }
 
 /// Translations

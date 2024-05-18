@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 interface Meaning {
   definition: string;
   example?: string;
