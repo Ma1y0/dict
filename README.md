@@ -13,5 +13,6 @@
 - [x] Bug: Trim word search
 - [X] Bug: Fix es-lint issues
 - [ ] Bug: Users can add word to their to learn list even if they already done so
-- [ ] Add word feature
-- [ ] Add pronunciation
+- [ ] Add: word feature
+- [ ] Add: pronunciation
+- [ ] Add: Word of the Day
