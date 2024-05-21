@@ -134,7 +134,7 @@ export async function getToLearn(limit: number) {
     }),
   );
 
-  await sleep(5000);
+  // await sleep(5000);
 
   return data;
 }
