@@ -1,19 +1,12 @@
-"use client";
+import { getToLearn } from "~/server/query";
+import { FlashCardsList } from "./cardsList";
 
-import { type getToLearn } from "~/server/query";
+export async function FlashCards() {
+  const words = await getToLearn(5);
 
-type Props = {
-  words: Awaited<ReturnType<typeof getToLearn>>;
-};
-
-export function FlashCards(props: Props) {
   return (
     <>
-      <div>
-        {props.words.map((x) => (
-          <p key={x.id}>{x.id}</p>
-        ))}
-      </div>
+      <FlashCardsList words={words} />
     </>
   );
 }

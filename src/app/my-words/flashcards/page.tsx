@@ -1,14 +1,16 @@
-import { getToLearn } from "~/server/query";
+import { Suspense } from "react";
 import { FlashCards } from "./_components/cards";
+import { Spinner } from "~/components/ui/spinner";
 
 export default async function Page() {
-  const words = await getToLearn(5);
-
   return (
     <>
       <div>
-        <h1>Hello</h1>
-        <FlashCards words={words} />
+        <>
+          <Suspense fallback={<Spinner />}>
+            <FlashCards />
+          </Suspense>
+        </>
       </div>
     </>
   );

@@ -5,8 +5,8 @@ import { meanings, toLearn, translations } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { type TargetLanguageCode } from "deepl-node";
 import { translate } from "./translate";
-import { throws } from "assert";
 import { eq } from "drizzle-orm";
+import { sleep } from "~/lib/utils";
 
 export async function getWord(s: string) {
   const word = await db.query.words.findFirst({
@@ -134,5 +134,7 @@ export async function getToLearn(limit: number) {
     }),
   );
 
-	return data
+  await sleep(5000);
+
+  return data;
 }
