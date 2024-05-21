@@ -101,14 +101,14 @@ async function createTranslation(
 }
 
 /// Flashcards
-export async function getToLeanr(limit: number) {
+export async function getToLearn(limit: number) {
   const { userId } = auth();
 
   if (!userId) throw new Error("Unauthorized");
 
   const data = await db.query.toLearn.findMany({
     where: (toLearn, { eq }) => eq(toLearn.userId, userId),
-    orderBy: (toLearn, { desc }) => [desc(toLearn.appearance)],
+    orderBy: (toLearn, { asc }) => [asc(toLearn.appearance)],
     limit: limit,
     with: {
       word: {
