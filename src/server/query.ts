@@ -5,6 +5,8 @@ import { meanings, toLearn, translations } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { type TargetLanguageCode } from "deepl-node";
 import { translate } from "./translate";
+import { throws } from "assert";
+import { eq } from "drizzle-orm";
 
 export async function getWord(s: string) {
   const word = await db.query.words.findFirst({
@@ -96,4 +98,41 @@ async function createTranslation(
   await db
     .insert(translations)
     .values({ wordId, language: lang, translation: [translation.text] });
+}
+
+/// Flashcards
+export async function getToLeanr(limit: number) {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
+  const data = await db.query.toLearn.findMany({
+    where: (toLearn, { eq }) => eq(toLearn.userId, userId),
+    orderBy: (toLearn, { desc }) => [desc(toLearn.appearance)],
+    limit: limit,
+    with: {
+      word: {
+        columns: {
+          id: true,
+          word: true,
+        },
+        with: {
+          meanings: true,
+          translations: true,
+        },
+      },
+    },
+  });
+
+  // Increase appearance
+  await Promise.all(
+    data.map(async (x) => {
+      await db
+        .update(toLearn)
+        .set({ appearance: x.appearance + 1 })
+        .where(eq(toLearn.id, x.id));
+    }),
+  );
+
+	return data
 }

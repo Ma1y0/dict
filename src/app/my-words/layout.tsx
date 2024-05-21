@@ -5,8 +5,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>      <SignedOut>
+  return (
+    <>
+      <SignedOut>
         <RedirectToSignIn />
       </SignedOut>
-{children}</>;
+      {children}
+    </>
+  );
 }
