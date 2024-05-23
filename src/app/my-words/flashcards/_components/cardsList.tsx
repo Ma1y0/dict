@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { capitalizeFirst } from "~/lib/utils";
 import { type getToLearn } from "~/server/query";
 
 type Props = {
@@ -27,7 +28,7 @@ function Card(props: CardProps) {
 
   return (
     <div
-      className="h-64 w-full md:w-5/6 lg:w-[38rem] select-none border bg-secondary"
+      className="h-64 w-full select-none border bg-secondary md:w-5/6 lg:w-[38rem]"
       onClick={() =>
         setSide((prevState) => (prevState == "front" ? "back" : "front"))
       }
@@ -37,10 +38,15 @@ function Card(props: CardProps) {
           <h2 className="text-6xl">{props.word.word.word}</h2>
         </div>
       ) : (
-        <div className="p-3">
+        <div className="p-4">
           <h2 className="text-4xl">
-            {props.word.word.translations[0]?.translation}
+            {capitalizeFirst(props.word.word.translations[0]?.translation[0] ?? "")}
           </h2>
+          <ul className="flex flex-col gap-1 p-3">
+            {props.word.word.meanings.map((x) => (
+              <li key={x.id}>{x.definition}</li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
