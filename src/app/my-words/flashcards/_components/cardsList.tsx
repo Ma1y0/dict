@@ -1,9 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { checkMarkIcon, leftArrowIcon, noSymbolIcon, rightArrowIcon } from "~/components/icons";
+import {
+  checkMarkIcon,
+  leftArrowIcon,
+  noSymbolIcon,
+  rightArrowIcon,
+} from "~/components/icons";
 import { capitalizeFirst } from "~/lib/utils";
 import { type getToLearn } from "~/server/query";
+import { didKnowACTION, didntKnowACTION } from "../actions";
 
 type Props = {
   words: Awaited<ReturnType<typeof getToLearn>>;
@@ -11,6 +17,12 @@ type Props = {
 
 export function FlashCardsList(props: Props) {
   const [cardId, setCardId] = useState(0);
+
+  const withIdDidKnowACTION = didKnowACTION.bind(null, props.words[cardId]!.id);
+  const withIdDidntKnowACTION = didntKnowACTION.bind(
+    null,
+    props.words[cardId]!.id,
+  );
 
   const cards = useMemo(
     () =>
@@ -24,7 +36,7 @@ export function FlashCardsList(props: Props) {
 
   return (
     <>
-      <div className="flex items-center gap-6 flex-col">
+      <div className="flex flex-col items-center gap-6">
         <div className="flex gap-6">
           <button onClick={() => setCardId((prevState) => prevState - 1)}>
             {leftArrowIcon}
@@ -34,10 +46,18 @@ export function FlashCardsList(props: Props) {
             {rightArrowIcon}
           </button>
         </div>
-				<div className="flex justify-between md:w-5/6 lg:w-[38rem]">
-					<button>{checkMarkIcon}</button>
-					<button>{noSymbolIcon}</button>
-				</div>
+        <div className="flex justify-between md:w-5/6 lg:w-[38rem]">
+          <form action={withIdDidKnowACTION}>
+            <button onClick={() => setCardId((prevState) => prevState + 1)}>
+              {checkMarkIcon}
+            </button>
+          </form>
+          <form action={withIdDidntKnowACTION}>
+            <button onClick={() => setCardId((prevState) => prevState + 1)}>
+              {noSymbolIcon}
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );
