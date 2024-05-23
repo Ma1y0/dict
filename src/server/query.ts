@@ -6,7 +6,6 @@ import { auth } from "@clerk/nextjs/server";
 import { type TargetLanguageCode } from "deepl-node";
 import { translate } from "./translate";
 import { eq } from "drizzle-orm";
-import { sleep } from "~/lib/utils";
 
 export async function getWord(s: string) {
   const word = await db.query.words.findFirst({
@@ -97,7 +96,7 @@ async function createTranslation(
 
   await db
     .insert(translations)
-    .values({ wordId, language: lang, translation: [translation.text] });
+    .values({ wordId, language: lang, translation: translation.text });
 }
 
 /// Flashcards

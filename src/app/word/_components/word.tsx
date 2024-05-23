@@ -16,7 +16,7 @@ export async function Word(props: { word: string }) {
       <div className="flex h-10 flex-1 items-center justify-between border-b py-6 pb-8">
         <h2 className="text-2xl font-semibold">{capitalizeFirst(word.word)}</h2>
         <h2 className="text-gray-30 text-2xl font-semibold">
-          {word.translations.map((x) => capitalizeFirst(x.translation[0] ?? "")).join(" ")}
+          {word.translations.map((x) => capitalizeFirst(x.translation)).join(" ")}
         </h2>
         <div>
           <SignedIn>

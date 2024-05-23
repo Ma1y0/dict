@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { checkMarkIcon, leftArrowIcon, noSymbolIcon, rightArrowIcon } from "~/components/icons";
 import { capitalizeFirst } from "~/lib/utils";
 import { type getToLearn } from "~/server/query";
 
@@ -9,13 +10,37 @@ type Props = {
 };
 
 export function FlashCardsList(props: Props) {
-  const cards = props.words.map((x) => (
-    <div key={x.id} className="flex h-full w-full justify-center">
-      <Card word={x} />
-    </div>
-  ));
+  const [cardId, setCardId] = useState(0);
 
-  return <>{cards[0]}</>;
+  const cards = useMemo(
+    () =>
+      props.words.map((x) => (
+        <div key={x.id} className="">
+          <Card word={x} />
+        </div>
+      )),
+    [props.words],
+  );
+
+  return (
+    <>
+      <div className="flex items-center gap-6 flex-col">
+        <div className="flex gap-6">
+          <button onClick={() => setCardId((prevState) => prevState - 1)}>
+            {leftArrowIcon}
+          </button>
+          {cards[cardId]}
+          <button onClick={() => setCardId((prevState) => prevState + 1)}>
+            {rightArrowIcon}
+          </button>
+        </div>
+				<div className="flex justify-between md:w-5/6 lg:w-[38rem]">
+					<button>{checkMarkIcon}</button>
+					<button>{noSymbolIcon}</button>
+				</div>
+      </div>
+    </>
+  );
 }
 
 type CardProps = {
@@ -38,10 +63,10 @@ function Card(props: CardProps) {
           <h2 className="text-6xl">{capitalizeFirst(props.word.word.word)}</h2>
         </div>
       ) : (
-        <div className="p-4">
+        <div className="h-full w-full overflow-auto p-6">
           <h2 className="text-4xl">
             {capitalizeFirst(
-              props.word.word.translations[0]?.translation[0] ?? "",
+              props.word.word.translations[0]?.translation ?? "",
             )}
           </h2>
           <ul className="flex flex-col gap-1 p-3">
