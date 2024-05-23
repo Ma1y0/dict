@@ -101,7 +101,7 @@ export const translations = createTable(
     id: serial("id").primaryKey(),
     wordId: integer("word_id").notNull(),
     language: char("language", { length: 2 }).notNull(), // ISO 639-1 language code
-    translation: text("translation").array().notNull(),
+    translation: text("translation").notNull(),
   },
   (table) => ({
     translationWord: index("translation_word_idx").on(table.wordId),

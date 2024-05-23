@@ -35,12 +35,14 @@ function Card(props: CardProps) {
     >
       {side == "front" ? (
         <div className="flex h-full w-full items-center justify-center">
-          <h2 className="text-6xl">{props.word.word.word}</h2>
+          <h2 className="text-6xl">{capitalizeFirst(props.word.word.word)}</h2>
         </div>
       ) : (
         <div className="p-4">
           <h2 className="text-4xl">
-            {capitalizeFirst(props.word.word.translations[0]?.translation[0] ?? "")}
+            {capitalizeFirst(
+              props.word.word.translations[0]?.translation[0] ?? "",
+            )}
           </h2>
           <ul className="flex flex-col gap-1 p-3">
             {props.word.word.meanings.map((x) => (

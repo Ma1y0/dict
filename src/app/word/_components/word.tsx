@@ -2,6 +2,7 @@ import { type meanings } from "~/server/db/schema";
 import { addWordToLearnList, getWord } from "~/server/query";
 import { AddToLearnButton } from "./addToLearButton";
 import { SignedIn } from "@clerk/nextjs";
+import { capitalizeFirst } from "~/lib/utils";
 
 export async function Word(props: { word: string }) {
   const word = await getWord(props.word);
@@ -13,9 +14,9 @@ export async function Word(props: { word: string }) {
   return (
     <div className="border px-3 py-2">
       <div className="flex h-10 flex-1 items-center justify-between border-b py-6 pb-8">
-        <h2 className="text-2xl font-semibold">{word.word}</h2>
-        <h2 className="text-2xl font-semibold text-gray-300">
-          {word.translations.map((x) => x.translation).join(" ")}
+        <h2 className="text-2xl font-semibold">{capitalizeFirst(word.word)}</h2>
+        <h2 className="text-gray-30 text-2xl font-semibold">
+          {word.translations.map((x) => capitalizeFirst(x.translation[0] ?? "")).join(" ")}
         </h2>
         <div>
           <SignedIn>
