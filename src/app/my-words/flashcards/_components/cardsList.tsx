@@ -10,13 +10,14 @@ import {
 import { capitalizeFirst } from "~/lib/utils";
 import { type getToLearn } from "~/server/query";
 import { didKnowACTION, didntKnowACTION } from "../actions";
+import { useCardId } from "~/lib/flashCardHook";
 
 type Props = {
   words: Awaited<ReturnType<typeof getToLearn>>;
 };
 
 export function FlashCardsList(props: Props) {
-  const [cardId, setCardId] = useState(0);
+  const { cardId, nextCard, prevCard } = useCardId(props.words.length);
 
   const withIdDidKnowACTION = didKnowACTION.bind(null, props.words[cardId]!.id);
   const withIdDidntKnowACTION = didntKnowACTION.bind(
@@ -38,22 +39,22 @@ export function FlashCardsList(props: Props) {
     <>
       <div className="flex flex-col items-center gap-6">
         <div className="flex gap-6">
-          <button onClick={() => setCardId((prevState) => prevState - 1)}>
+          <button onClick={() => prevCard()}>
             {leftArrowIcon}
           </button>
           {cards[cardId]}
-          <button onClick={() => setCardId((prevState) => prevState + 1)}>
+          <button onClick={() => nextCard()}>
             {rightArrowIcon}
           </button>
         </div>
         <div className="flex justify-between md:w-5/6 lg:w-[38rem]">
           <form action={withIdDidKnowACTION}>
-            <button onClick={() => setCardId((prevState) => prevState + 1)}>
+            <button onClick={() => nextCard()}>
               {checkMarkIcon}
             </button>
           </form>
           <form action={withIdDidntKnowACTION}>
-            <button onClick={() => setCardId((prevState) => prevState + 1)}>
+            <button onClick={() => nextCard()}>
               {noSymbolIcon}
             </button>
           </form>
