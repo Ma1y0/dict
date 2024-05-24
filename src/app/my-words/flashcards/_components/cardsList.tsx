@@ -1,12 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  checkMarkIcon,
-  leftArrowIcon,
-  noSymbolIcon,
-  rightArrowIcon,
-} from "~/components/icons";
+import { checkMarkIcon, noSymbolIcon } from "~/components/icons";
 import { capitalizeFirst } from "~/lib/utils";
 import { type getToLearn } from "~/server/query";
 import { didKnowACTION, didntKnowACTION } from "../actions";
@@ -17,7 +12,7 @@ type Props = {
 };
 
 export function FlashCardsList(props: Props) {
-  const { cardId, nextCard, prevCard } = useCardId(props.words.length);
+  const { cardId, nextCard } = useCardId(props.words.length);
 
   const withIdDidKnowACTION = didKnowACTION.bind(null, props.words[cardId]!.id);
   const withIdDidntKnowACTION = didntKnowACTION.bind(
@@ -39,13 +34,19 @@ export function FlashCardsList(props: Props) {
     <>
       <div className="flex flex-col items-center gap-6">
         <div className="flex gap-6">
-          <form action={withIdDidntKnowACTION} className="flex items-center justify-center">
+          <form
+            action={withIdDidntKnowACTION}
+            className="flex items-center justify-center"
+          >
             <button onClick={() => nextCard()}>{noSymbolIcon}</button>
           </form>
 
           {cards[cardId]}
 
-          <form action={withIdDidKnowACTION} className="flex items-center justify-center">
+          <form
+            action={withIdDidKnowACTION}
+            className="flex items-center justify-center"
+          >
             <button onClick={() => nextCard()}>{checkMarkIcon}</button>
           </form>
         </div>

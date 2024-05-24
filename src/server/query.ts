@@ -144,6 +144,26 @@ export async function didKnow(id: number) {
   const word = await db.query.toLearn.findFirst({
     where: (x, { eq }) => eq(x.id, id),
     columns: {
+      knew: true,
+    },
+  });
+
+  if (!word) throw new Error("Record doesn't exist");
+
+  await db
+    .update(toLearn)
+    .set({ knew: word.knew + 1 })
+    .where(eq(toLearn.id, id));
+}
+
+export async function didntKnow(id: number) {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
+  const word = await db.query.toLearn.findFirst({
+    where: (x, { eq }) => eq(x.id, id),
+    columns: {
       didntKnow: true,
     },
   });
