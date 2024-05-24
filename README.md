@@ -7,6 +7,7 @@
 - [ ] Better searching
 - [x] Add to_learn table
 - [ ] Flashcards
+- [ ] Flashcards Server Actions
 - [x] Add definitions to the DB
 - [x] To learn button (Server action?)
 - [x] Translations
