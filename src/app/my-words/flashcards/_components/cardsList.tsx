@@ -39,24 +39,14 @@ export function FlashCardsList(props: Props) {
     <>
       <div className="flex flex-col items-center gap-6">
         <div className="flex gap-6">
-          <button onClick={() => prevCard()}>
-            {leftArrowIcon}
-          </button>
-          {cards[cardId]}
-          <button onClick={() => nextCard()}>
-            {rightArrowIcon}
-          </button>
-        </div>
-        <div className="flex justify-between md:w-5/6 lg:w-[38rem]">
-          <form action={withIdDidKnowACTION}>
-            <button onClick={() => nextCard()}>
-              {checkMarkIcon}
-            </button>
+          <form action={withIdDidntKnowACTION} className="flex items-center justify-center">
+            <button onClick={() => nextCard()}>{noSymbolIcon}</button>
           </form>
-          <form action={withIdDidntKnowACTION}>
-            <button onClick={() => nextCard()}>
-              {noSymbolIcon}
-            </button>
+
+          {cards[cardId]}
+
+          <form action={withIdDidKnowACTION} className="flex items-center justify-center">
+            <button onClick={() => nextCard()}>{checkMarkIcon}</button>
           </form>
         </div>
       </div>

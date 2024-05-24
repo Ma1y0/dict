@@ -1,7 +1,9 @@
 "use server";
 
+import { didKnow } from "~/server/query";
+
 export async function didKnowACTION(id: number) {
-  console.log(id);
+	await didKnow(id)
 }
 
 export async function didntKnowACTION(id: number) {

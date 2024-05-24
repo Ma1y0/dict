@@ -133,7 +133,25 @@ export async function getToLearn(limit: number) {
     }),
   );
 
-  // await sleep(5000);
-
   return data;
+}
+
+export async function didKnow(id: number) {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
+  const word = await db.query.toLearn.findFirst({
+    where: (x, { eq }) => eq(x.id, id),
+    columns: {
+      didntKnow: true,
+    },
+  });
+
+  if (!word) throw new Error("Record doesn't exist");
+
+  await db
+    .update(toLearn)
+    .set({ didntKnow: word.didntKnow + 1 })
+    .where(eq(toLearn.id, id));
 }
